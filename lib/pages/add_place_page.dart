@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/image_input.dart';
+
 class AddPlacePage extends StatefulWidget {
   static const routeName = '/add-place';
 
@@ -8,6 +10,8 @@ class AddPlacePage extends StatefulWidget {
 }
 
 class _AddPlacePageState extends State<AddPlacePage> {
+  final _titleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +19,25 @@ class _AddPlacePageState extends State<AddPlacePage> {
         title: Text('Add a New Place'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('User inputs...'),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Title'),
+                      controller: _titleController,
+                    ),
+                    SizedBox(height: 8.0),
+                    ImageInput(),
+                  ],
+                ),
+              ),
+            ),
+          ),
           TextButton.icon(
             onPressed: () {
               //...submit
