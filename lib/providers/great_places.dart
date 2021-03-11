@@ -31,14 +31,18 @@ class GreatPlaces with ChangeNotifier {
 
   Future<void> fetchPlaces() async {
     final dataList = await DBHelper.getData('user_places');
-    dataList
-        .map((item) => Place(
-              id: item['id'],
-              title: item['title'],
-              location: null,
-              image: File(item['image']),
-            ))
-        .toList();
+
+    _items = dataList.map(
+      (item) {
+        print(item['title']);
+        return Place(
+          id: item['id'],
+          title: item['title'],
+          location: null,
+          image: File(item['image']),
+        );
+      },
+    ).toList();
     notifyListeners();
   }
 }
