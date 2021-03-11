@@ -31,7 +31,7 @@ class _AddPlacePageState extends State<AddPlacePage> {
                       decoration: InputDecoration(labelText: 'Title'),
                       controller: _titleController,
                     ),
-                    SizedBox(height: 8.0),
+                    SizedBox(height: 12.0),
                     ImageInput(),
                   ],
                 ),
@@ -50,6 +50,8 @@ class _AddPlacePageState extends State<AddPlacePage> {
               shape: const BeveledRectangleBorder(
                 borderRadius: BorderRadius.zero,
               ),
+              elevation: 0,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
           )
         ],

@@ -2,7 +2,8 @@
     package="com.example.great_places_flutter">
    <application
         android:label="great_places_flutter"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

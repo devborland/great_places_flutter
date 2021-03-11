@@ -28,8 +28,8 @@ class _ImageInputState extends State<ImageInput> {
     return Row(
       children: [
         Container(
-          width: 150,
-          // height: 100,
+          width: 200,
+          height: 120,
           decoration: BoxDecoration(
             border: Border.all(
               width: 1.0,
@@ -43,10 +43,7 @@ class _ImageInputState extends State<ImageInput> {
                   fit: BoxFit.cover,
                   width: double.infinity,
                 )
-              : Text(
-                  'No image taken',
-                  textAlign: TextAlign.center,
-                ),
+              : Text('No image taken', textAlign: TextAlign.center),
         ),
         SizedBox(width: 8.0),
         Expanded(
