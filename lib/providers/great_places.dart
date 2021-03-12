@@ -34,7 +34,6 @@ class GreatPlaces with ChangeNotifier {
 
     _items = dataList.map(
       (item) {
-        print(item['title']);
         return Place(
           id: item['id'],
           title: item['title'],

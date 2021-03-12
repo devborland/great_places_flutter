@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/image_input.dart';
 import '../providers/great_places.dart';
+import '../widgets/image_input.dart';
+import '../widgets/location_input.dart';
 
 class AddPlacePage extends StatefulWidget {
   static const routeName = '/add-place';
@@ -42,15 +43,17 @@ class _AddPlacePageState extends State<AddPlacePage> {
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     TextField(
                       decoration: InputDecoration(labelText: 'Title'),
                       controller: _titleController,
                     ),
-                    SizedBox(height: 12.0),
+                    SizedBox(height: 8.0),
                     ImageInput(_selectImage),
+                    SizedBox(height: 8.0),
+                    LocationInput(),
                   ],
                 ),
               ),
