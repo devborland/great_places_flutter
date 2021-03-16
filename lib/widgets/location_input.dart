@@ -27,13 +27,14 @@ class _LocationInputState extends State<LocationInput> {
   }
 
   Future<void> _selectOnMap() async {
+    final locData = await Location().getLocation();
     final selectedLocation = await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => MapPage(
           initialLocation: PlaceLocation(
-            latitude: 43.4846,
-            longitude: 43.6070,
+            latitude: locData.latitude,
+            longitude: locData.longitude,
           ),
           isSelecting: true,
         ),

@@ -22,10 +22,14 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future<void> _onMapRendered() async {
-    mapController.move(
-      point: ym.Point(
-        latitude: widget.initialLocation.latitude,
-        longitude: widget.initialLocation.longitude,
+    var point = ym.Point(
+      latitude: widget.initialLocation.latitude,
+      longitude: widget.initialLocation.longitude,
+    );
+    mapController.move(point: point);
+    mapController.addPlacemark(
+      ym.Placemark(
+        point: point,
       ),
     );
   }
@@ -35,30 +39,17 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Map'),
-      ),
-      body: Stack(
-        alignment: AlignmentDirectional.bottomStart,
-        children: [
-          ym.YandexMap(
-            onMapCreated: _onMapCreated,
-            onMapRendered: _onMapRendered,
-          ),
-          Column(
-            children: [
-              FloatingActionButton(
-                mini: true,
-                onPressed: () {},
-                child: Icon(Icons.add),
-              ),
-              // SizedBox(height: 4.0),
-              FloatingActionButton(
-                mini: true,
-                onPressed: () {},
-                child: Icon(Icons.remove),
-              ),
-            ],
-          ),
+        actions: [
+          ElevatedButton.icon(
+            onPressed: () {},
+            icon: Icon(Icons.check),
+            label: Text('Pick'),
+          )
         ],
+      ),
+      body: ym.YandexMap(
+        onMapCreated: _onMapCreated,
+        onMapRendered: _onMapRendered,
       ),
     );
   }
