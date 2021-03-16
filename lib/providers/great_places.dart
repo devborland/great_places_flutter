@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:great_places_flutter/models/place.dart';
 
 import '../models/place.dart';
 import '../helpers/db_helper.dart';

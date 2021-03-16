@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:great_places_flutter/models/place.dart';
+import '../pages/map_page.dart';
 import 'package:location/location.dart';
 
 import '../helpers/location_helper.dart';
@@ -22,6 +24,24 @@ class _LocationInputState extends State<LocationInput> {
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (ctx) => MapPage(
+          initialLocation: PlaceLocation(
+            latitude: 43.4846,
+            longitude: 43.6070,
+          ),
+          isSelecting: true,
+        ),
+      ),
+    );
+    if (selectedLocation == null) {
+      return;
+    }
   }
 
   @override
@@ -58,7 +78,7 @@ class _LocationInputState extends State<LocationInput> {
               label: Text('Current Location'),
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: _selectOnMap,
               icon: Icon(Icons.map),
               label: Text('Select on Map'),
             ),

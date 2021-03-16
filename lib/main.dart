@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/map_page.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/great_places.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         home: PlacesListPage(),
         routes: {
           AddPlacePage.routeName: (ctx) => AddPlacePage(),
+          MapPage.routeName: (ctx) => MapPage(),
         },
       ),
     );
