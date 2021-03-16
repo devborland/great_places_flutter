@@ -15,8 +15,7 @@ class _LocationInputState extends State<LocationInput> {
 
   Future<void> _getCurrentLocation() async {
     final locData = await Location().getLocation();
-    print(locData.latitude);
-    print(locData.longitude);
+
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
       latitude: locData.latitude,
       longitude: locData.longitude,
@@ -28,7 +27,7 @@ class _LocationInputState extends State<LocationInput> {
 
   Future<void> _selectOnMap() async {
     final locData = await Location().getLocation();
-    final selectedLocation = await Navigator.of(context).push(
+    final PlaceLocation selectedLocation = await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => MapPage(
@@ -36,13 +35,21 @@ class _LocationInputState extends State<LocationInput> {
             latitude: locData.latitude,
             longitude: locData.longitude,
           ),
-          isSelecting: true,
         ),
       ),
     );
+
     if (selectedLocation == null) {
+      print('NO LOCATION');
       return;
     }
+    final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
+      latitude: selectedLocation.latitude,
+      longitude: selectedLocation.longitude,
+    );
+    setState(() {
+      _previewImageUrl = staticMapImageUrl;
+    });
   }
 
   @override
