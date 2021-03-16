@@ -7,8 +7,8 @@ class LocationHelper {
   }) {
     String imgUrl = 'https://static-maps.yandex.ru/1.x/?' +
         'z=14' +
-        '&l=map'
-            '&ll=$longitude,$latitude' +
+        '&l=map' +
+        '&ll=$longitude,$latitude' +
         '&size=650,450' +
         '&scale=2.0' +
         '&pt=$longitude,$latitude,comma' +
