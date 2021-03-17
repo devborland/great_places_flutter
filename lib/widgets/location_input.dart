@@ -6,6 +6,9 @@ import 'package:location/location.dart';
 import '../helpers/location_helper.dart';
 
 class LocationInput extends StatefulWidget {
+  final Function onSelectPlace;
+  LocationInput(this.onSelectPlace);
+
   @override
   _LocationInputState createState() => _LocationInputState();
 }
@@ -13,20 +16,30 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
 
-  Future<void> _getCurrentLocation() async {
-    final locData = await Location().getLocation();
-
+  Future<void> _showPreview(double lat, double lng) async {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
-      latitude: locData.latitude,
-      longitude: locData.longitude,
+      latitude: lat,
+      longitude: lng,
     );
+
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
   }
 
+  Future<void> _getCurrentLocation() async {
+    try {
+      final locData = await Location().getLocation();
+      _showPreview(locData.latitude, locData.longitude);
+      widget.onSelectPlace(locData.latitude, locData.longitude);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> _selectOnMap() async {
     final locData = await Location().getLocation();
+
     final PlaceLocation selectedLocation = await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
@@ -43,13 +56,14 @@ class _LocationInputState extends State<LocationInput> {
       print('NO LOCATION');
       return;
     }
-    final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
-      latitude: selectedLocation.latitude,
-      longitude: selectedLocation.longitude,
+
+    LocationHelper.getPlaceAddress(
+      selectedLocation.latitude,
+      selectedLocation.longitude,
     );
-    setState(() {
-      _previewImageUrl = staticMapImageUrl;
-    });
+
+    _showPreview(locData.latitude, locData.longitude);
+    widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override
