@@ -5,6 +5,7 @@ import 'providers/great_places.dart';
 
 import 'pages/add_place_page.dart';
 import 'pages/places_list_page.dart';
+import 'pages/place_details_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         home: PlacesListPage(),
         routes: {
           AddPlacePage.routeName: (ctx) => AddPlacePage(),
+          PlaceDetailPage.routeName: (ctx) => PlaceDetailPage(),
         },
       ),
     );

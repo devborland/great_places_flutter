@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:great_places_flutter/pages/place_details_page.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/great_places.dart';
@@ -52,7 +53,9 @@ class PlacesListPage extends StatelessWidget {
                               subtitle:
                                   Text(greatPlaces.items[i].location.address),
                               onTap: () {
-                                //... Go to detail page
+                                Navigator.of(context).pushNamed(
+                                    PlaceDetailPage.routeName,
+                                    arguments: greatPlaces.items[i].id);
                               },
                             ),
                           ),
