@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:great_places_flutter/models/place.dart';
+import '../pages/map_page.dart';
 import 'package:location/location.dart';
 
 import '../helpers/location_helper.dart';
 
 class LocationInput extends StatefulWidget {
+  final Function onSelectPlace;
+  LocationInput(this.onSelectPlace);
+
   @override
   _LocationInputState createState() => _LocationInputState();
 }
@@ -11,17 +16,54 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
 
-  Future<void> _getCurrentLocation() async {
-    final locData = await Location().getLocation();
-    print(locData.latitude);
-    print(locData.longitude);
+  Future<void> _showPreview(double lat, double lng) async {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
-      latitude: locData.latitude,
-      longitude: locData.longitude,
+      latitude: lat,
+      longitude: lng,
     );
+
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
+  }
+
+  Future<void> _getCurrentLocation() async {
+    try {
+      final locData = await Location().getLocation();
+      _showPreview(locData.latitude, locData.longitude);
+      widget.onSelectPlace(locData.latitude, locData.longitude);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _selectOnMap() async {
+    final locData = await Location().getLocation();
+
+    final PlaceLocation selectedLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (ctx) => MapPage(
+          initialLocation: PlaceLocation(
+            latitude: locData.latitude,
+            longitude: locData.longitude,
+          ),
+        ),
+      ),
+    );
+
+    if (selectedLocation == null) {
+      print('NO LOCATION');
+      return;
+    }
+
+    LocationHelper.getPlaceAddress(
+      selectedLocation.latitude,
+      selectedLocation.longitude,
+    );
+
+    _showPreview(locData.latitude, locData.longitude);
+    widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override
@@ -58,7 +100,7 @@ class _LocationInputState extends State<LocationInput> {
               label: Text('Current Location'),
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: _selectOnMap,
               icon: Icon(Icons.map),
               label: Text('Select on Map'),
             ),

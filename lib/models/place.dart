@@ -17,8 +17,8 @@ class Place {
 }
 
 class PlaceLocation {
-  final double latitude;
-  final double longitude;
+  double latitude;
+  double longitude;
   final String address;
 
   PlaceLocation({
