@@ -46,13 +46,7 @@ class PlaceDetailPage extends StatelessWidget {
                 ),
               );
             },
-            style: TextButton.styleFrom(),
-            child: Text(
-              'View on Map',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
+            child: Text('View on Map'),
           )
         ],
       ),
